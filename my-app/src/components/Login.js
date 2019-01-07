@@ -19,7 +19,7 @@ class Login extends Component {
         const { dispatch } = this.props;
 
         dispatch(setAuthedUser(name));
-        this.props.history.push(`/`)
+        //this.props.history.push(`/`)
     }
 
 

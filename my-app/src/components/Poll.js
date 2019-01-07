@@ -7,10 +7,17 @@ import AnsweredPoll from './AnsweredPoll'
 class Poll extends Component {
     
      render() {        
-        const { users, authedUser, match } = this.props;
+        const { questions, users, authedUser, match } = this.props;
         const id = match.params.id
         const answered = Object.keys(users[authedUser].answers).includes(id)
-        
+        console.log(questions[id] === undefined)
+        if (questions[id] === undefined){
+            return(<div>
+                <h1>ERROR 404</h1>
+                <p>Looks like this question does not exist. Try navigating home. </p>
+            </div>
+            )
+        }
         if(answered){
             return(
                 <div>
