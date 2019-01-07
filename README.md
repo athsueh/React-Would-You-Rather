@@ -3,7 +3,7 @@
 This is the second project in Udacity React.JS course, specifically concerning React and Redux.
 
 ## Installation
-Once the repository has been cloned, it can be installed with:
+Once the repository has been cloned, navigate into the "my-app" directory. From then, it can be installed with:
 ```
 npm install
 ```
