@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Dashboard from './Dashboard'
@@ -6,11 +6,11 @@ import Login from './Login'
 import Poll from './Poll'
 import CreateQuestion from './CreateQuestion'
 import Leaderboard from './Leaderboard'
-import { Route, BrowserRouter } from 'react-router-dom'
+import { Route, BrowserRouter, Switch } from 'react-router-dom'
 import Navigation from './Navigation';
 
 
-class App extends React.Component {
+class App extends Component {
   componentDidMount () {
     const { dispatch } = this.props
 
@@ -30,23 +30,25 @@ class App extends React.Component {
     </div>
     }
 
+    const NoMatch = () => (
+      <div>
+        <h1>ERROR 404</h1>
+        <p>Looks like this page does not exist. Try navigating home. </p>
+      </div>
+    )
+
     return (
       <BrowserRouter>
-      <div>
+      <Fragment>      
         <Navigation />
-        <Route exact path='/' render={() => (
-          <Dashboard />
-        )} />
-        <Route path='/question/:id' render={() => (
-          <Poll />
-        )} />         
-        <Route path='/add' render={() => (
-          <CreateQuestion />
-        )} /> 
-        <Route path='/leaderboard' render={() => (
-          <Leaderboard />
-        )} /> 
-      </div>
+        <Switch>
+        <Route path='/' exact component ={Dashboard} />
+        <Route path='/question/:id' component={Poll} />
+        <Route path='/add' component={CreateQuestion} />
+        <Route path='/leaderboard' component={Leaderboard} />
+        <Route component={NoMatch} />    
+        </Switch>
+      </Fragment>
       </BrowserRouter>
     )
   }
