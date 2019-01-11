@@ -7,6 +7,15 @@ class Dashboard extends Component {
     answered: false
   }
 
+  sortTime = (q) => {
+    const qs = this.props.qs
+    const qIds = (q).sort((a,b) => (
+        (qs[b].timestamp)-
+        (qs[a].timestamp)                
+    ))
+    return qIds
+  }
+
   displayQuestions = () => {
     let qIds = ''
     if (this.state.answered === false) {
@@ -14,8 +23,14 @@ class Dashboard extends Component {
     } else { 
       qIds = this.props.answeredQIds
     }
+
+    if (qIds !== null){
+      console.log(qIds)
+      qIds = this.sortTime(qIds)
+    }
+
     return <div>
-      { qIds.map(id => <ListQuestion key={id} id={id} />)  }
+      { this.sortTime(qIds).map(id => <ListQuestion key={id} id={id} />)  }
     </div>
 
   }
@@ -45,8 +60,9 @@ function mapStateToProps (state) {
   let authedUser = state.users[userId]
   let answeredQIds = Object.keys(authedUser.answers)
   let unansweredQIds = questions.filter(q => !answeredQIds.includes(q.id)).map(q => q.id)
+  let qs = state.questions
 
-  return { authedUser, answeredQIds, unansweredQIds }
+  return { authedUser, answeredQIds, unansweredQIds, qs }
 }
 
 export default connect(mapStateToProps)(Dashboard)
